@@ -1,0 +1,14 @@
+# Agency Memory - Code Owners
+# All changes require review from @Team588
+
+# Default owner for all files
+* @Team588
+
+# Critical files - only Team588
+/playbooks/ @Team588
+/memory-exports/best-practices/ @Team588
+/templates/ @Team588
+/sync-log.md @Team588
+
+# Insights - Team588 reviews
+/memory-exports/insights/ @Team588

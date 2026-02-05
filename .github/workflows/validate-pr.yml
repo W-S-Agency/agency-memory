@@ -1,0 +1,107 @@
+name: 🛡️ Validate Memory Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'memory-exports/**'
+      - 'playbooks/**'
+      - 'templates/**'
+      - '.github/workflows/validate-pr.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate PR
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔍 Check for secrets
+        id: secrets
+        run: |
+          echo "Checking for potential secrets..."
+
+          # Patterns that indicate secrets
+          PATTERNS=(
+            "password"
+            "secret"
+            "token"
+            "api[_-]key"
+            "private[_-]key"
+            "aws_secret"
+            "DATABASE_URL"
+            "PRIVATE_KEY"
+          )
+
+          FOUND=0
+          for pattern in "${PATTERNS[@]}"; do
+            if grep -ri "$pattern" --include="*.md" . 2>/dev/null; then
+              echo "⚠️ Found potential secret pattern: $pattern"
+              FOUND=1
+            fi
+          done
+
+          if [ $FOUND -eq 1 ]; then
+            echo "❌ Potential secrets detected!"
+            exit 1
+          fi
+          echo "✅ No secrets detected"
+
+      - name: 📦 Check file sizes
+        id: sizes
+        run: |
+          echo "Checking file sizes..."
+          MAX_SIZE=52428800  # 50MB
+
+          OVERSIZED=0
+          while IFS= read -r file; do
+            SIZE=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+            if [ "$SIZE" -gt "$MAX_SIZE" ]; then
+              echo "❌ File too large (>${MAX_SIZE}): $file ($SIZE bytes)"
+              OVERSIZED=1
+            fi
+          done < <(find . -type f)
+
+          if [ $OVERSIZED -eq 1 ]; then
+            exit 1
+          fi
+          echo "✅ All files under size limit"
+
+      - name: 📝 Validate Markdown
+        id: markdown
+        run: |
+          echo "Validating markdown files..."
+
+          INVALID=0
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              # Check if file is empty
+              if [ ! -s "$file" ]; then
+                echo "⚠️ Empty file: $file"
+                INVALID=1
+              fi
+
+              # Check for common markdown issues
+              if grep -q "TODO\|FIXME\|XXX" "$file"; then
+                echo "⚠️ Unfinished content in: $file"
+              fi
+            fi
+          done < <(find . -name "*.md" -type f)
+
+          if [ $INVALID -eq 1 ]; then
+            exit 1
+          fi
+          echo "✅ Markdown validation passed"
+
+      - name: ✨ Summary
+        if: success()
+        run: |
+          echo "✅ All security checks passed!"
+          echo ""
+          echo "📊 Summary:"
+          echo "  - No secrets detected"
+          echo "  - File sizes OK"
+          echo "  - Markdown valid"
+          echo ""
+          echo "🎉 Ready for review!"
