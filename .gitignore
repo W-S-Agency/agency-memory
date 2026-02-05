@@ -1,0 +1,38 @@
+# Secrets
+*.env
+*.local
+secrets/
+credentials.json
+.env.local
+api-keys.json
+
+# Local MCP
+claude-memory/
+~/claude-memory/
+
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+.pytest_cache/
+__pycache__/
