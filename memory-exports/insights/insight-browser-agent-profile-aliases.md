@@ -205,7 +205,7 @@ browser_screenshot({ profileId: "team", fullPage: true })
 Browser Agent уже настроен как **source** в WS Workspace:
 
 ```json
-// ~/.craft-agent/workspaces/my-workspace/sources/browser-agent/config.json
+// ~/.ws-workspace/workspaces/my-workspace/sources/browser-agent/config.json
 {
   "type": "mcp",
   "transport": "stdio",

@@ -67,8 +67,8 @@ tags: [automation, craft-agents, memory-system]
 
 ### Документация
 
-- [MEMORY-SKILLS-GUIDE.md](C:/Users/alexa/.craft-agent/workspaces/my-workspace/MEMORY-SKILLS-GUIDE.md) - Полное руководство
-- [AGENCY-MEMORY-FORMAT.md](C:/Users/alexa/.craft-agent/workspaces/my-workspace/AGENCY-MEMORY-FORMAT.md) - Формат заметок
+- [MEMORY-SKILLS-GUIDE.md](C:/Users/alexa/.ws-workspace/workspaces/my-workspace/MEMORY-SKILLS-GUIDE.md) - Полное руководство
+- [AGENCY-MEMORY-FORMAT.md](C:/Users/alexa/.ws-workspace/workspaces/my-workspace/AGENCY-MEMORY-FORMAT.md) - Формат заметок
 - 4 SKILL.md файла с детальными инструкциями
 
 ## Когда применять
