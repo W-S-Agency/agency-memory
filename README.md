@@ -32,7 +32,7 @@ agency-memory/
 ├─ playbooks/              # Пошаговые процессы
 │  ├─ marketing-playbook.md
 │  ├─ delivery-playbook.md
-│  └─ onboarding-playbook.md
+│  └─ playbook-browser-agent-setup.md
 │
 ├─ client-profiles/        # Информация о клиентах
 ├─ tools-stack/            # Выбранные технологии
